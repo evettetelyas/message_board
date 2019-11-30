@@ -1,6 +1,7 @@
 <%= form_for @changeset, Routes.topic_path(@conn, :create), fn f -> %>
   <div class="form-group">
 		<%= text_input f, :title, placeholder: "Enter a Title", class: "form-control" %>
+		<%= error_tag f, :title %>
   </div>
 	<%= submit "Add to Board", class: "btn btn-primary" %>
 <% end %>
