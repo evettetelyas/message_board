@@ -4,8 +4,6 @@ defmodule DiscussWeb.TopicController do
   alias Discuss.Topic
 
   def new(conn, _params) do
-    # struct = %Discuss.Topic{}
-    # params = %{}
     changeset = Topic.changeset(%Topic{}, %{})
 
     render conn, "new.html", changeset: changeset
@@ -49,5 +47,14 @@ defmodule DiscussWeb.TopicController do
       {:error, changeset} -> 
         render conn, "edit.html", changeset: changeset, topic: Repo.get(Topic, topic_id)
     end
+  end
+
+  def delete(conn, %{"id" => topic_id}) do
+    Repo.get(Topic, topic_id)
+    |> Repo.delete
+
+    conn
+    |> put_flash(:info, "Topic Deleted")
+    |> redirect(to: Routes.topic_path(conn, :index))
   end
 end
